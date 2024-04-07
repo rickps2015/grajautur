@@ -1,15 +1,15 @@
 import express, { json } from 'express';
 import { createConnection } from 'mysql2';
-import usuariosRouter from './routes/usuarios.js'; // Certifique-se de que a extensão .js esteja presente
+import routerRestaurante from './routes/restaurantes.js'; // Certifique-se de que a extensão .js esteja presente
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware para análise do corpo da solicitação (req.body)
 app.use(json());
 
 // Rotas da API
-app.use('/api/usuarios', usuariosRouter);
+app.use('/api/restaurante', routerRestaurante);
 // Adicione outras rotas conforme necessário
 
 // Rota de teste
