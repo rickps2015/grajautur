@@ -1,11 +1,13 @@
 import { Router } from 'express';
-const router = Router();
-import { listarRestaurantes, buscarRestaurantePorId, criarRestaurante, atualizarRestaurante, excluirRestaurante } from '../models/Restaurante.js';
+const routerRestaurante = Router();
+import Restaurante from '../models/Restaurante.js';
+
+const resta = new Restaurante();
 
 // Rota para listar todos os restaurantes
-router.get('/', async (req, res) => {
+routerRestaurante.get('/', async (req, res) => {
     try {
-        const restaurantes = await listarRestaurantes();
+        const restaurantes = await resta.listarRestaurantes();
         res.json(restaurantes);
     } catch (error) {
         console.error('Erro ao listar restaurantes:', error);
@@ -14,10 +16,10 @@ router.get('/', async (req, res) => {
 });
 
 // Rota para buscar um restaurante por ID
-router.get('/:id', async (req, res) => {
+routerRestaurante.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const restaurante = await buscarRestaurantePorId(id);
+        const restaurante = await resta.buscarRestaurantePorId(id);
         if (!restaurante) {
             return res.status(404).json({ mensagem: 'Restaurante não encontrado.' });
         }
@@ -29,10 +31,10 @@ router.get('/:id', async (req, res) => {
 });
 
 // Rota para criar um novo restaurante
-router.post('/', async (req, res) => {
+routerRestaurante.post('/', async (req, res) => {
     const { nome, endereco, telefone, latitude, longitude, link_site, horario_inicio, horario_fim, dia_funcionamento, criado_por } = req.body;
     try {
-        const novoRestaurante = await criarRestaurante(nome, endereco, telefone, latitude, longitude, link_site, horario_inicio, horario_fim, dia_funcionamento, criado_por);
+        const novoRestaurante = await resta.criarRestaurante(nome, endereco, telefone, latitude, longitude, link_site, horario_inicio, horario_fim, dia_funcionamento, criado_por);
         res.status(201).json(novoRestaurante);
     } catch (error) {
         console.error('Erro ao criar restaurante:', error);
@@ -41,11 +43,11 @@ router.post('/', async (req, res) => {
 });
 
 // Rota para atualizar um restaurante existente
-router.put('/:id', async (req, res) => {
+routerRestaurante.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, endereco, telefone, latitude, longitude, link_site, horario_inicio, horario_fim, dia_funcionamento, criado_por } = req.body;
     try {
-        const restauranteAtualizado = await atualizarRestaurante(id, nome, endereco, telefone, latitude, longitude, link_site, horario_inicio, horario_fim, dia_funcionamento, criado_por);
+        const restauranteAtualizado = await resta.atualizarRestaurante(id, nome, endereco, telefone, latitude, longitude, link_site, horario_inicio, horario_fim, dia_funcionamento, criado_por);
         if (!restauranteAtualizado) {
             return res.status(404).json({ mensagem: 'Restaurante não encontrado.' });
         }
@@ -57,10 +59,10 @@ router.put('/:id', async (req, res) => {
 });
 
 // Rota para excluir um restaurante
-router.delete('/:id', async (req, res) => {
+routerRestaurante.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const restauranteExcluido = await excluirRestaurante(id);
+        const restauranteExcluido = await resta.excluirRestaurante(id);
         if (!restauranteExcluido) {
             return res.status(404).json({ mensagem: 'Restaurante não encontrado.' });
         }
