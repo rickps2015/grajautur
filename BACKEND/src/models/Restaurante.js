@@ -1,7 +1,7 @@
 import { execute } from '../config/database.js';
 
 class Restaurante {
-    static async listarRestaurantes() {
+    async listarRestaurantes() {
         const [rows] = await execute('SELECT * FROM restaurantes');
         return rows;
     }

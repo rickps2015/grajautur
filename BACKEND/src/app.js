@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8080;
 app.use(json());
 
 // Rotas da API
-app.use('/api/restaurante', routerRestaurante);
+app.use('/api', routerRestaurante);
 // Adicione outras rotas conforme necessário
 
 // Rota de teste

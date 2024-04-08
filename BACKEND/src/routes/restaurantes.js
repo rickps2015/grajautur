@@ -5,7 +5,7 @@ import Restaurante from '../models/Restaurante.js';
 const resta = new Restaurante();
 
 // Rota para listar todos os restaurantes
-routerRestaurante.get('/', async (req, res) => {
+routerRestaurante.get('/restaurante', async (req, res) => {
     try {
         const restaurantes = await resta.listarRestaurantes();
         res.json(restaurantes);
